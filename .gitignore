@@ -1,0 +1,7 @@
+homebridge/accessories
+homebridge/persist
+mysql/datadir/*
+src/*
+.env
+*.expanded
+!.gitkeep

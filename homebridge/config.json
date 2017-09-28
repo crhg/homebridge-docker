@@ -1,0 +1,45 @@
+{
+  "bridge": {
+    "name": "Homebridge",
+    "username": "$HOMEBRIDGE_USERNAME",
+    "port": 51826,
+    "pin": "$HOMEBRIDGE_PIN"
+  },
+  "description": "My HOME",
+  "platforms": [
+      {
+          "platform": "netatmo",
+          "name": "netatmo platform",
+          "ttl": 5,
+          "auth": {
+              "client_id": "$NETATMO_CLIENT_ID",
+              "client_secret": "$NETATMO_CLIENT_SECRET",
+              "username": "$NETATMO_USER_NAME",
+              "password": "$NETATMO_PASSWORD"
+          }
+      }
+  ],
+  "accessories": [
+    {
+      "accessory": "Http",
+      "name": "照明",
+      "switchHandling": "no",
+      "http_method": "GET",
+      "on_url": "http://localhost:8001/api/command/light/on",
+      "off_url": "http://localhost:8001/api/command/light/off",
+      "status_url": "",
+      "service": "Light",
+      "brightnessHandling": "no",
+      "sendimmediately": "",
+      "username": "",
+      "password": ""
+    },
+    {
+      "accessory": "Thermostat",
+      "name": "エアコン",
+      "apiroute": "http://localhost:8002/api/thermostat/thermostat1",
+      "maxTemp": 30,
+      "minTemp": 18
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+version: '3'
+services:
+    homebridge:
+        image: marcoraddatz/homebridge
+        volumes:
+            - ./homebridge:/root/.homebridge
+            - ./homebridge/config.json.expanded:/root/.homebridge/config.json
+        network_mode: host
+        restart: always
+
+    mysql:
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+            MYSQL_DATABASE: thermostat
+        volumes:
+            - ./mysql/datadir:/var/lib/mysql
+        restart: always
+
+    irkit-wrapper:
+        image: nunun/laraz
+        environment:
+            - SERVE=nginx
+            - DOT_ENV=.env.__NO_OVERWRITE__
+        ports:
+            - 8001:80
+        restart: always
+        volumes:
+            - ./src/irkit-wrapper:/var/www/html
+            - ./irkit-wrapper/dot.env.docker.expanded:/var/www/html/.env
+            - ./irkit-wrapper/irkit.php:/var/www/html/config/irkit.php
+            - ./irkit-wrapper/www.conf:/etc/php7/php-fpm.d/www.conf
+
+    http-thermostat:
+        image: nunun/laraz
+        environment:
+            - SERVE=nginx
+            - DOT_ENV=.env.__NO_OVERWRITE__
+            - AUTO_DB_MIGRATE=1
+        ports:
+            - 8002:80
+        restart: always
+        volumes:
+            - ./src/http-thermostat:/var/www/html
+            - ./http-thermostat/dot.env.docker.expanded:/var/www/html/.env
+            - ./http-thermostat/irkit.php:/var/www/html/config/irkit.php
+            - ./http-thermostat/www.conf:/etc/php7/php-fpm.d/www.conf
+            - ./http-thermostat/database.sqlite:/var/www/html/database/database.sqlite
