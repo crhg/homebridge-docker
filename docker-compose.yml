@@ -36,7 +36,7 @@ services:
         environment:
             - SERVE=nginx
             - DOT_ENV=.env.__NO_OVERWRITE__
-            - AUTO_DB_MIGRATE=1
+            - AUTO_MIGRATE=1
         ports:
             - 8002:80
         restart: always
