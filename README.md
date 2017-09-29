@@ -22,18 +22,3 @@ Docker configuration file for homebrige at home
 % bash run-docker-compose.sh up -d
 ```
 
-- Monitor the log and wait for ```composer``` installation to complete
-
-```console
-% bash run-docker-compose.sh logs -f
-```
-
-- Setup database in http-thermostat service container
-
-```console
-% bash run-docker-compose.sh exec http-thermostat bash                                                                                                                 
-bash-4.3# php artisan migrate:install
-bash-4.3# php artisan migrate
-```
-
-
