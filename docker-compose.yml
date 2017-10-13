@@ -45,4 +45,3 @@ services:
             - ./http-thermostat/dot.env.docker.expanded:/var/www/html/.env
             - ./http-thermostat/irkit.php:/var/www/html/config/irkit.php
             - ./http-thermostat/www.conf:/etc/php7/php-fpm.d/www.conf
-            - ./http-thermostat/database.sqlite:/var/www/html/database/database.sqlite
