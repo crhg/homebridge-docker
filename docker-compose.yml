@@ -7,6 +7,10 @@ services:
             - ./homebridge/config.json.expanded:/root/.homebridge/config.json
         network_mode: host
         restart: always
+        logging:
+            options:
+                max-size: "2m"
+                max-file: "10"
 
     mysql:
         image: mysql
@@ -16,6 +20,10 @@ services:
         volumes:
             - ./mysql/datadir:/var/lib/mysql
         restart: always
+        logging:
+            options:
+                max-size: "2m"
+                max-file: "10"
 
     irkit-wrapper:
         image: nunun/laraz
@@ -25,23 +33,41 @@ services:
         ports:
             - 8001:80
         restart: always
+        logging:
+            options:
+                max-size: "2m"
+                max-file: "10"
         volumes:
             - ./src/irkit-wrapper:/var/www/html
             - ./irkit-wrapper/dot.env.docker.expanded:/var/www/html/.env
             - ./irkit-wrapper/irkit.php:/var/www/html/config/irkit.php
             - ./irkit-wrapper/www.conf:/etc/php7/php-fpm.d/www.conf
 
-    http-thermostat:
+    http-thermostat-remo:
         image: nunun/laraz
         environment:
             - SERVE=nginx
             - DOT_ENV=.env.__NO_OVERWRITE__
-            - AUTO_MIGRATE=1
+            - AUTO_MIGRATE=0
         ports:
             - 8002:80
         restart: always
+        logging:
+            options:
+                max-size: "2m"
+                max-file: "10"
         volumes:
-            - ./src/http-thermostat:/var/www/html
-            - ./http-thermostat/dot.env.docker.expanded:/var/www/html/.env
-            - ./http-thermostat/irkit.php:/var/www/html/config/irkit.php
-            - ./http-thermostat/www.conf:/etc/php7/php-fpm.d/www.conf
+            - ./src/http-thermostat-remo:/var/www/html
+            - ./http-thermostat-remo/dot.env.docker.expanded:/var/www/html/.env
+            - ./http-thermostat-remo/www.conf:/etc/php7/php-fpm.d/www.conf
+
+    cron:
+        build: ./cron
+        image: cron
+        restart: always
+        logging:
+            options:
+                max-size: "2m"
+                max-file: "10"
+        volumes:
+            - ./cron/crontab:/cron/crontab

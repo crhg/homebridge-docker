@@ -58,6 +58,16 @@ return [
           ]
         ]
       ]
-    ]
+    ],
+    "dummy" => [
+      "host" => "host1",
+      "command" => [
+        "hello" => [
+          "format" => "us",
+          "freq" => 37,
+          "data" => [ 10, ],
+        ]
+      ]
+    ],
   ]
 ];

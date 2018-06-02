@@ -1,0 +1,1 @@
+*/20 * * * * curl -s --no-keepalive http://irkit-wrapper/api/command/dummy/hello > /dev/null

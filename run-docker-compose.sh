@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXPAND_FILES="http-thermostat/dot.env.docker irkit-wrapper/dot.env.docker homebridge/config.json"
+EXPAND_FILES="http-thermostat-remo/dot.env.docker irkit-wrapper/dot.env.docker homebridge/config.json"
 
 source .env
 export MYSQL_ROOT_PASSWORD
